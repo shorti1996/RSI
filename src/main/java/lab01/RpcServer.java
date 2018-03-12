@@ -2,10 +2,14 @@ package lab01;
 
 import org.apache.xmlrpc.WebServer;
 
+/**
+ * Serwer RPC
+ */
 public class RpcServer {
 
     public static void main(String[] args) {
         try {
+//            picalc(100, 1000);
             System.out.println("Startuje serwer XML-RPC...");
             // 10000+nr komputera w laboratorium
             int port = 10001;
@@ -22,62 +26,55 @@ public class RpcServer {
         }
     }
 
-    public Integer echo(int x, int y) {
-        return x + y;
+    /**
+     * Sprawdza, jaki trojkat mozna zbudowac z odcinkow o podanych dlugosciach
+     * @param x bok trojkata
+     * @param y bok trojkata
+     * @param z bok trojkata
+     * @return Typ trojkata, jaki mozna zbudowac z podanych bokow
+     */
+    public String trojkat(int x, int y, int z) {
+        return Trojkatownik.jakiTrojkat(x, y, z);
     }
 
-    public int asy(int x) {
-        System.out.println("... wywołano asy - odliczam");
+    /**
+     * Obliczanie liczby PI metoda monte carlo
+     * @param liczbaProb ilosc losowan
+     * @param czas czas opoznienia ogloszenia wyniku
+     * @return przyblizenie liczby PI oraz jej roznica ze stala Math.PI
+     */
+    public String picalc(int liczbaProb, int czas) {
         try {
-            Thread.sleep(x);
+            Thread.sleep(czas);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
             Thread.currentThread().interrupt();
         }
-        System.out.println("... asy - koniec odliczania");
-        return (123);
+        double res = PiGuess.pi_calc(liczbaProb);
+        double[] result = new double[2];
+        result[0] = res;
+        result[1] = Math.PI - res;
+        return "Wynik: " + res + ", Roznica" + (Math.PI - res);
     }
 
-    public double addition(double x, double y) {
-        return x + y;
-    }
-
-    public double substraction(double x, double y) {
-        return x - y;
-    }
-
-    public double multiplication(double x, double y) {
-        return x * y;
-    }
-
+    /**
+     * Dzielenie dwoch liczb rzeczywistych
+     * @param x dzielna
+     * @param y dzielnik
+     * @return iloraz
+     */
     public double division(double x, double y) {
         return x / y;
     }
 
-    public String differentTypes(String x, int y) {
-        String format = "First argument is of type: %s, hashCode: %d, value: %s\n" +
-                "Second argument is an int, value: %d";
-        int timeLeft = 2000;
-        int timeStep = 500;
-        System.out.println("Long calculations");
-        try {
-            while (timeLeft > 0) {
-                Thread.sleep(timeStep);
-                timeLeft -= timeStep;
-                System.out.println("timeLeft = " + timeLeft);
-            }
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-            Thread.currentThread().interrupt();
-        }
-        String message = String.format(format,
-                x.getClass(), x.hashCode(), x,
-                y);
-        System.out.println("differentTypes finished");
-        return message;
-    }
-
+    /**
+     * Pokazuje dostepne na serwerze metody
+     * @return wiadomosc z dostepnymi metodami
+     */
     public String show() {
-        return "Stub!";
+        return "Lista metod:" +
+                "\ntrojkat(int x, int y, int z, int czas): jaki trojkat mozna zbudowac z bokow o podanych dlugosciach, czas- opoznienie" +
+                "\npiguess(int lprob, int opoznienie): obliczanie liczby pi metoda monte carlo, opoznienie w milisekundach" +
+                "\ndifferentTypes(String x, int y): pokazuje hashCode stringu";
     }
 }

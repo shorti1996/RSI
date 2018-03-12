@@ -4,9 +4,16 @@ import org.apache.xmlrpc.AsyncCallback;
 
 import java.net.URL;
 
+/**
+ * Asynchroniczny callback
+ */
 public class AC implements AsyncCallback {
 
     private RpcClient rpcClient;
+
+    public AC() {
+
+    }
 
     public AC(RpcClient rpcClient) {
         this.rpcClient = rpcClient;
@@ -17,7 +24,9 @@ public class AC implements AsyncCallback {
         System.out.println("o = " + o);
         System.out.println("url = " + url);
         System.out.println("s = " + s);
-        rpcClient.setReady(true);
+        if (rpcClient != null) {
+            rpcClient.setReady(true);
+        }
     }
 
     @Override
@@ -25,6 +34,8 @@ public class AC implements AsyncCallback {
         System.out.println("e = " + e);
         System.out.println("url = " + url);
         System.out.println("s = " + s);
-        rpcClient.setReady(true);
+        if (rpcClient != null) {
+            rpcClient.setReady(true);
+        }
     }
 }

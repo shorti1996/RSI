@@ -8,33 +8,36 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Vector;
 
+/**
+ * Klient RPC
+ */
 public class RpcClient {
 
     private static String SERVER_HANDLER_NAME = "mojserwer";
     private volatile boolean mReady;
 
     public static void main(String[] args) {
-//        try {
-////            Zamiast xxx podaj port = 10000 + numer komputera w laboratorium
-//            XmlRpcClient srv = new XmlRpcClient("http://localhost:10001");
-////            Vector<Integer> params = new Vector<>();
-////            params.addElement(13);
-////            params.addElement(21);
-////            Object result = srv.execute("mojserwer.echo", params);
-////            int wynik = (Integer) result;
-////            System.out.println("wynik = " + wynik);
-//
-//            lab01.AC cb = new lab01.AC();
-//            Vector<Integer> params2 = new Vector<>();
-//            params2.addElement(1000);
-//            srv.executeAsync("mojserwer.asy", params2, cb);
-//            System.out.println("Wywolano asynchronicznie");
-//
-//        } catch (Exception exception) {
-//            System.err.println("Klient XML-RPC: " + exception);
-//        }
-        RpcClient rpcClient = new RpcClient();
-        rpcClient.zad2_loop();
+        try {
+//            Zamiast xxx podaj port = 10000 + numer komputera w laboratorium
+            XmlRpcClient srv = new XmlRpcClient("http://localhost:10001");
+            Vector<Integer> params = new Vector<>();
+            params.addElement(13);
+            params.addElement(21);
+            Object result = srv.execute("mojserwer.echo", params);
+            int wynik = (Integer) result;
+            System.out.println("wynik = " + wynik);
+
+            lab01.AC cb = new lab01.AC();
+            Vector<Integer> params2 = new Vector<>();
+            params2.addElement(1000);
+            srv.executeAsync("mojserwer.asy", params2, cb);
+            System.out.println("Wywolano asynchronicznie");
+
+        } catch (Exception exception) {
+            System.err.println("Klient XML-RPC: " + exception);
+        }
+//        RpcClient rpcClient = new RpcClient();
+//        rpcClient.zad2_loop();
     }
 
     private void zad2_loop() {
